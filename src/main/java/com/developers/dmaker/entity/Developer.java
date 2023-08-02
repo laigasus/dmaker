@@ -1,7 +1,9 @@
 package com.developers.dmaker.entity;
 
+import com.developers.dmaker.code.StatusCode;
 import com.developers.dmaker.type.DeveloperLevel;
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,6 +12,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
+@DynamicUpdate
 @SuppressWarnings("unused")
 public class Developer {
     @Id
@@ -27,12 +30,60 @@ public class Developer {
     private String name;
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
+    private StatusCode statusCode;
+
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    public Long getId() {
+        return id;
+    }
+
+    public DeveloperLevel getDeveloperLevel() {
+        return developerLevel;
+    }
+
+    public DeveloperSkillType getDeveloperSkillType() {
+        return developerSkillType;
+    }
+
+    public Integer getExperienceYears() {
+        return experienceYears;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setStatusCode(StatusCode statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public void editDeveloper(DeveloperLevel developerLevel, DeveloperSkillType developerSkillType, Integer experienceYears) {
+        this.developerLevel = developerLevel;
+        this.developerSkillType = developerSkillType;
+        this.experienceYears = experienceYears;
+    }
 
     public static final class DeveloperBuilder {
         private Long id;
@@ -42,6 +93,7 @@ public class Developer {
         private String memberId;
         private String name;
         private Integer age;
+        private StatusCode statusCode;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
 
@@ -87,6 +139,11 @@ public class Developer {
             return this;
         }
 
+        public DeveloperBuilder statusCode(StatusCode statusCode) {
+            this.statusCode = statusCode;
+            return this;
+        }
+
         public DeveloperBuilder createdAt(LocalDateTime createdAt) {
             this.createdAt = createdAt;
             return this;
@@ -99,15 +156,16 @@ public class Developer {
 
         public Developer build() {
             Developer developer = new Developer();
-            developer.id = this.id;
-            developer.updatedAt = this.updatedAt;
-            developer.developerLevel = this.developerLevel;
-            developer.memberId = this.memberId;
-            developer.name = this.name;
-            developer.experienceYears = this.experienceYears;
-            developer.age = this.age;
             developer.createdAt = this.createdAt;
+            developer.statusCode = this.statusCode;
+            developer.name = this.name;
+            developer.developerLevel = this.developerLevel;
+            developer.experienceYears = this.experienceYears;
+            developer.updatedAt = this.updatedAt;
+            developer.memberId = this.memberId;
+            developer.id = this.id;
             developer.developerSkillType = this.developerSkillType;
+            developer.age = this.age;
             return developer;
         }
     }
