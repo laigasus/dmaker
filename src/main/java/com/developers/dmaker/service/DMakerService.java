@@ -53,7 +53,7 @@ public class DMakerService {
         validateDeveloperLevel(request.developerLevel(), request.experienceYears());
 
         developerRepository.findByMemberId(request.memberId()).ifPresent((developer -> {
-            throw new DMakerException(DUPLICATED_MEMVER_ID);
+            throw new DMakerException(DUPLICATED_MEMBER_ID);
         }));
     }
 
@@ -61,7 +61,7 @@ public class DMakerService {
         if (developerLevel == DeveloperLevel.SENIOR && experienceYears < 10) {
             throw new DMakerException(LEVEL_EXPERIENCE_YEARS_NOT_MATCHED);
         }
-        if (developerLevel == DeveloperLevel.JUNGNIOR && experienceYears < 4 || experienceYears > 10) {
+        if (developerLevel == DeveloperLevel.JUNGNIOR && (experienceYears < 4 || experienceYears > 10)) {
             throw new DMakerException(LEVEL_EXPERIENCE_YEARS_NOT_MATCHED);
         }
         if (developerLevel == DeveloperLevel.JUNIOR && experienceYears > 4) {
