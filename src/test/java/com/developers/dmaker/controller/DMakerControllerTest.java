@@ -30,7 +30,7 @@ class DMakerControllerTest {
     @MockBean
     private DMakerService dMakerService;
 
-    protected MediaType contentType =
+    protected final MediaType contentType =
             new MediaType(MediaType.APPLICATION_JSON.getType(),
                     MediaType.APPLICATION_JSON.getSubtype(),
                     StandardCharsets.UTF_8);

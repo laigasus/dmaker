@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.lang.NonNull;
 
 public class CreateDeveloper {
     @RecordBuilder
@@ -38,7 +39,7 @@ public class CreateDeveloper {
             Integer experienceYears,
             String memberId
     ) {
-        public static Response fromEntity(Developer developer) {
+        public static Response fromEntity(@NonNull Developer developer) {
             return CreateDeveloperResponseBuilder.builder()
                     .developerLevel(developer.getDeveloperLevel())
                     .developerSkillType(developer.getDeveloperSkillType())

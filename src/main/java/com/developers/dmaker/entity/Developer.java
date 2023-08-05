@@ -1,6 +1,7 @@
 package com.developers.dmaker.entity;
 
 import com.developers.dmaker.code.StatusCode;
+import com.developers.dmaker.dto.EditDeveloper;
 import com.developers.dmaker.type.DeveloperLevel;
 import jakarta.persistence.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -79,10 +80,12 @@ public class Developer {
         this.statusCode = statusCode;
     }
 
-    public void editDeveloper(DeveloperLevel developerLevel, DeveloperSkillType developerSkillType, Integer experienceYears) {
-        this.developerLevel = developerLevel;
-        this.developerSkillType = developerSkillType;
-        this.experienceYears = experienceYears;
+    public Developer editDeveloper(EditDeveloper.Request request) {
+        this.developerLevel = request.developerLevel();
+        this.developerSkillType = request.developerSkillType();
+        this.experienceYears = request.experienceYears();
+
+        return this;
     }
 
     public static final class DeveloperBuilder {

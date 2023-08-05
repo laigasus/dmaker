@@ -21,6 +21,7 @@ import java.util.Optional;
 import static com.developers.dmaker.code.StatusCode.EMPLOYED;
 import static com.developers.dmaker.constant.DMakerConstant.MAX_JUNIOR_EXPERIENCE_YEARS;
 import static com.developers.dmaker.constant.DMakerConstant.MIN_SENIOR_EXPERIENCE_YEARS;
+import static com.developers.dmaker.entity.DeveloperSkillType.BACK_END;
 import static com.developers.dmaker.entity.DeveloperSkillType.FRONT_END;
 import static com.developers.dmaker.exception.DMakerErrorCode.DUPLICATED_MEMBER_ID;
 import static com.developers.dmaker.exception.DMakerErrorCode.LEVEL_EXPERIENCE_YEARS_NOT_MATCHED;
@@ -91,14 +92,14 @@ class DMakerServiceTest {
                 ArgumentCaptor.forClass(Developer.class);
 
         //when
-        dMakerService.createDeveloper(getCreateRequest(SENIOR, FRONT_END, MIN_SENIOR_EXPERIENCE_YEARS));
+        dMakerService.createDeveloper(getCreateRequest(SENIOR, BACK_END, MIN_SENIOR_EXPERIENCE_YEARS));
 
         //then
         verify(developerRepository, times(1))
                 .save(captor.capture());
         Developer savedDeveloper = captor.getValue();
         assertEquals(SENIOR, savedDeveloper.getDeveloperLevel());
-        assertEquals(FRONT_END, savedDeveloper.getDeveloperSkillType());
+        assertEquals(BACK_END, savedDeveloper.getDeveloperSkillType());
         assertEquals(MIN_SENIOR_EXPERIENCE_YEARS, savedDeveloper.getExperienceYears());
     }
 
@@ -149,7 +150,7 @@ class DMakerServiceTest {
         //then
         DMakerException dMakerException = assertThrows(DMakerException.class,
                 () -> dMakerService.createDeveloper(
-                        getCreateRequest(SENIOR, FRONT_END, MIN_SENIOR_EXPERIENCE_YEARS)
+                        getCreateRequest(SENIOR, FRONT_END, 12)
                 )
         );
 
